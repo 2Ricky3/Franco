@@ -100,7 +100,6 @@ export const site = {
     id: string;
     title: string;
     venue?: string;
-    photo?: string;
     details: string[];
   }>,
   accommodation: {

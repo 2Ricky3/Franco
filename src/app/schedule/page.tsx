@@ -29,15 +29,6 @@ export default function SchedulePage() {
                 {event.id === "ceremony" ? `📍 ${event.venue}` : event.venue}
               </p>
             )}
-            {event.photo && (
-              <div className="mx-auto mt-8 max-w-lg">
-                <SitePhoto
-                  src={event.photo}
-                  alt={event.title}
-                  aspectClass="aspect-[4/5]"
-                />
-              </div>
-            )}
             <div className="mt-8 space-y-4 text-ink-soft">
               {event.details.map((detail) => (
                 <RichText key={detail} text={detail} />
