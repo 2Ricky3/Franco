@@ -3,27 +3,24 @@ import { SitePhoto } from "@/components/SitePhoto";
 import { site } from "@/content/site";
 
 export const metadata = {
-  title: "Where to Stay",
+  title: "Accommodation",
 };
 
 export default function AccommodationPage() {
   return (
     <div className="animate-fade-up pb-20">
-      <PageIntro title={site.accommodation.title}>
+      <PageIntro title={site.accommodation.title} />
+      <div className="mx-auto mt-8 max-w-md px-5">
+        <SitePhoto
+          src={site.photos.accommodation}
+          alt="Angelique and Franco"
+          aspectClass="aspect-[4/5]"
+        />
+      </div>
+      <div className="mx-auto mt-10 max-w-2xl space-y-4 px-5 text-center text-ink-soft">
         {site.accommodation.intro.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
-      </PageIntro>
-
-      <div className="mx-auto mt-12 max-w-2xl px-5">
-        <SitePhoto
-          src={site.photos.accommodationDirectory}
-          alt={site.accommodation.directoryImageCaption}
-          aspectClass="aspect-[3/4] md:aspect-[4/3]"
-        />
-        <p className="mt-3 text-center text-sm text-ink-faint">
-          {site.accommodation.directoryImageCaption}
-        </p>
       </div>
 
       <section className="mx-auto mt-16 max-w-2xl px-5">
@@ -31,12 +28,14 @@ export default function AccommodationPage() {
         <div className="mt-10 space-y-12">
           {site.accommodation.listings.map((listing) => (
             <article key={listing.id} className="text-center">
-              <SitePhoto
-                src={listing.photo}
-                alt={listing.name}
-                aspectClass="aspect-[16/10]"
-              />
-              <h3 className="mt-6 text-lg">{listing.name}</h3>
+              {listing.photo ? (
+                <SitePhoto
+                  src={listing.photo}
+                  alt={listing.name}
+                  aspectClass="aspect-[16/10]"
+                />
+              ) : null}
+              <h3 className="text-lg">{listing.name}</h3>
               <p className="mt-2 text-ink-soft">{listing.note}</p>
               <a
                 href={listing.url}

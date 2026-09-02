@@ -12,17 +12,16 @@ export default function TravelPage() {
   return (
     <div className="animate-fade-up pb-20">
       <PageIntro title="Travel" />
-
-      <div className="mt-12">
-        <VenueNotice />
-      </div>
-
-      <div className="mx-auto mt-10 max-w-lg px-5">
+      <div className="mx-auto mt-8 max-w-md px-5">
         <SitePhoto
           src={site.photos.travel}
           alt="The way to the venue"
           aspectClass="aspect-[4/5]"
         />
+      </div>
+
+      <div className="mt-12">
+        <VenueNotice />
       </div>
 
       <ol className="mx-auto mt-16 max-w-xl space-y-10 px-5">

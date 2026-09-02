@@ -29,6 +29,10 @@ export const site = {
     ceremony: "/photos/ceremony.jpg",
     breakfast: "/photos/breakfast.jpg",
     travel: "/photos/travel.jpg",
+    schedule: "/photos/schedule.jpg",
+    qa: "/photos/qa.jpg",
+    registry: "/photos/registry.jpg",
+    accommodation: "/photos/accommodation.jpg",
     accommodationDirectory: "/photos/accommodation-directory.jpg",
   },
   venue: {
@@ -41,7 +45,7 @@ export const site = {
       "https://www.google.com/maps/dir/?api=1&destination=Minas%20Farm%20Venue%2C%20Cheerio%20Road%2C%20Haenertsburg",
   },
   travelNotice: {
-    heading: "IMPORTANT — GETTING TO THE VENUE",
+    heading: "IMPORTANT NOTICE",
     title: "Getting to the Venue",
     paragraphs: [
       "Please note that all roads leading to the venue are gravel roads.",
@@ -75,10 +79,8 @@ export const site = {
       id: "ceremony",
       title: "Ceremony",
       venue: "Minas Farm Venue",
-      photo: "/photos/ceremony.jpg",
       details: [
-        "Dress code: Semi-Formal Attire",
-        "We're getting married!",
+        "👔 Dress code: Semi-Formal Attire",
         "The ceremony will start at **15:00**. Please be seated before then.",
         "Official schedule to be communicated on the day.",
       ],
@@ -87,7 +89,6 @@ export const site = {
       id: "breakfast",
       title: "Post-Wedding Breakfast",
       venue: "Zwakala Brewery",
-      photo: "/photos/breakfast.jpg",
       details: [
         "If you're staying on a bit longer, join us for breakfast on the premises at Zwakala Brewery!",
         "More details to follow soon.",
@@ -116,21 +117,21 @@ export const site = {
         name: "Cheerio Trout Fishing & Holiday Resort",
         note: "Self-catering cottages in Cheerio Valley, a short drive from Haenertsburg.",
         url: "https://www.cheerio.co.za/",
-        photo: "/photos/stay-cheerio.jpg",
+        photo: "",
       },
       {
         id: "africamps",
         name: "AfriCamps at Magoebaskloof",
         note: "Boutique glamping tents in Magoebaskloof, convenient for the weekend.",
         url: "https://africamps.com/listings/africamps-at-magoebaskloof/",
-        photo: "/photos/stay-africamps.jpg",
+        photo: "",
       },
       {
         id: "magoebaskloof-hotel",
         name: "Magoebaskloof Hotel",
         note: "A local hotel option close to Haenertsburg and the mountain pass.",
         url: "https://www.magoebaskloof.co.za/",
-        photo: "/photos/stay-hotel.jpg",
+        photo: "",
       },
     ],
   },
@@ -167,12 +168,21 @@ export const site = {
     {
       question: "What time should guests arrive?",
       answer:
-        "The ceremony begins at **15:00**. Please be seated before then — we recommend arriving by **14:30**.",
+        "The ceremony begins at **3:00 PM**. Please be seated before then — we recommend arriving by **2:30 PM**.",
+    },
+    {
+      question: "Can I bring a plus one?",
+      answer:
+        "No. The invitation is exclusively for the named guests, unless you were specifically told you may bring someone.",
+    },
+    {
+      question: "What is the dress code?",
+      answer: "Semi-formal attire.",
     },
     {
       question: "Is there accommodation at the venue?",
       answer:
-        "Accommodation on the venue is only available for close family and the bridal party. All other guests will find stays in and around Haenertsburg — see the Stay page for a few starting points.",
+        "Accommodation on the venue is only available for close family and the bridal party. All other guests will find stays in and around Haenertsburg — see the Accommodation page for a few starting points.",
     },
     {
       question: "What should I do if I have trouble finding the venue?",
@@ -191,22 +201,13 @@ export const site = {
       heading: "Should you wish to contribute",
       placeholder:
         "Bank details will be added here shortly. If you already have them from us, please use those.",
-      accountName: "",
-      bank: "",
-      accountNumber: "",
-      branchCode: "",
-      referenceHint: "Please use your name as the payment reference.",
+      accountName: "FRANCO OOSTHUIZEN",
+      bank: "ABSA Bank",
+      accountNumber: "4090377427",
+      branchCode: "632005",
+      accountType: "Current account",
+      referenceHint: "Your Initials+20 March 2027",
     },
-  },
-  additionalInfo: {
-    title: "Additional Information",
-    items: [
-      {
-        id: "cash-bar",
-        title: "Cash Bar",
-        body: "A cash bar will be available throughout the evening.",
-      },
-    ],
   },
 } as const;
 
@@ -214,8 +215,7 @@ export const navItems = [
   { href: "/", label: "Home" },
   { href: "/schedule", label: "Schedule" },
   { href: "/travel", label: "Travel" },
-  { href: "/accommodation", label: "Stay" },
+  { href: "/accommodation", label: "Accommodation" },
   { href: "/qa", label: "Q&A" },
   { href: "/registry", label: "Registry" },
-  { href: "/info", label: "Info" },
 ] as const;

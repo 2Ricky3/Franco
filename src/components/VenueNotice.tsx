@@ -9,14 +9,13 @@ type VenueNoticeProps = {
 export function VenueNotice({ compact = false }: VenueNoticeProps) {
   return (
     <section className="mx-auto max-w-2xl px-5 text-center">
-      <p className="text-[13px] font-medium tracking-[0.28em] uppercase">
-        <span className="animate-important">IMPORTANT</span>
-        {" — GETTING TO THE VENUE"}
+      <p className="text-[11px] font-medium tracking-[0.22em] uppercase">
+        <span className="animate-important">IMPORTANT NOTICE</span>
       </p>
-      <h2 className="mt-5 font-script text-4xl md:text-5xl">
+      <h2 className="mt-4 font-script text-3xl md:text-4xl">
         {site.travelNotice.title}
       </h2>
-      <div className="mt-6 space-y-4 text-ink-soft">
+      <div className="mt-5 space-y-3 text-sm text-ink-soft">
         {site.travelNotice.paragraphs.map((paragraph) => (
           <RichText key={paragraph} text={paragraph} />
         ))}

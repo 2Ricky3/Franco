@@ -13,13 +13,20 @@ export default function SchedulePage() {
   return (
     <div className="animate-fade-up pb-20">
       <PageIntro title="Schedule" />
+      <div className="mx-auto mt-8 max-w-md px-5">
+        <SitePhoto
+          src={site.photos.schedule}
+          alt="Angelique and Franco"
+          aspectClass="aspect-[4/5]"
+        />
+      </div>
       <div className="mx-auto mt-12 max-w-2xl space-y-20 px-5">
         {events.map((event) => (
           <article key={event.id} className="text-center">
             <h2 className="font-script text-4xl md:text-5xl">{event.title}</h2>
             {event.venue && (
               <p className="mt-4 text-sm tracking-[0.16em] uppercase text-ink-soft">
-                {event.venue}
+                {event.id === "ceremony" ? `📍 ${event.venue}` : event.venue}
               </p>
             )}
             {event.photo && (
