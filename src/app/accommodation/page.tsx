@@ -10,13 +10,6 @@ export default function AccommodationPage() {
   return (
     <div className="animate-fade-up pb-20">
       <PageIntro title={site.accommodation.title} />
-      <div className="mx-auto mt-8 max-w-md px-5">
-        <SitePhoto
-          src={site.photos.accommodation}
-          alt="Angelique and Franco"
-          aspectClass="aspect-[4/5]"
-        />
-      </div>
       <div className="mx-auto mt-10 max-w-2xl space-y-4 px-5 text-center text-ink-soft">
         {site.accommodation.intro.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
