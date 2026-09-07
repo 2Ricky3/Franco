@@ -28,15 +28,17 @@ export default function AccommodationPage() {
         <div className="mt-10 space-y-12">
           {site.accommodation.listings.map((listing) => (
             <article key={listing.id} className="text-center">
-              {listing.photo ? (
-                <SitePhoto
-                  src={listing.photo}
-                  alt={listing.name}
-                  aspectClass="aspect-[16/10]"
-                />
-              ) : null}
               <h3 className="text-lg">{listing.name}</h3>
               <p className="mt-2 text-ink-soft">{listing.note}</p>
+              {listing.photo ? (
+                <div className="mx-auto mt-6 max-w-lg">
+                  <SitePhoto
+                    src={listing.photo}
+                    alt={listing.name}
+                    aspectClass="aspect-[16/10]"
+                  />
+                </div>
+              ) : null}
               <a
                 href={listing.url}
                 target="_blank"

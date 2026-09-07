@@ -72,7 +72,7 @@ export const site = {
   ],
   parking: {
     title: "Where to park",
-    body: "There is free parking available on the **Minas** and **Zwakala Brewery** premises. Both are a short walking distance from the ceremony.",
+    body: "Staff will help out with parking.",
   },
   schedule: [
     {
@@ -116,21 +116,21 @@ export const site = {
         name: "Cheerio Trout Fishing & Holiday Resort",
         note: "Self-catering cottages in Cheerio Valley, a short drive from Haenertsburg.",
         url: "https://www.cheerio.co.za/",
-        photo: "",
+        photo: "/photos/stay-cheerio.jpg",
       },
       {
         id: "africamps",
         name: "AfriCamps at Magoebaskloof",
         note: "Boutique glamping tents in Magoebaskloof, convenient for the weekend.",
-        url: "https://africamps.com/listings/africamps-at-magoebaskloof/",
-        photo: "",
+        url: "https://africamps.com/farm/africamps-magoebaskloof-limpopo/",
+        photo: "/photos/stay-africamps.jpg",
       },
       {
         id: "magoebaskloof-hotel",
         name: "Magoebaskloof Hotel",
         note: "A local hotel option close to Haenertsburg and the mountain pass.",
         url: "https://www.magoebaskloof.co.za/",
-        photo: "",
+        photo: "/photos/stay-hotel.jpg",
       },
     ],
   },
@@ -148,7 +148,7 @@ export const site = {
     {
       question: "Where should I park?",
       answer:
-        "There is free parking available on the **Minas** and **Zwakala Brewery** premises. Both are a short walking distance from the ceremony.",
+        "Staff will help out with parking.",
     },
     {
       question: "Are kids welcome?",
@@ -172,7 +172,7 @@ export const site = {
     {
       question: "Can I bring a plus one?",
       answer:
-        "No. The invitation is exclusively for the named guests, unless you were specifically told you may bring someone.",
+        "Unfortunately not. The invitation is exclusively for the named guests, unless you were specifically told you may bring someone.",
     },
     {
       question: "What is the dress code?",

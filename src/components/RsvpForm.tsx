@@ -45,10 +45,9 @@ export function RsvpForm() {
     const data = new FormData(form);
     const fullName = String(data.get("fullName") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
-    const guestCountRaw = Number(data.get("guestCount") ?? 1);
     const notes = String(data.get("notes") ?? "").trim();
     const willAttend = attending === "yes";
-    const guestCount = willAttend ? Math.min(20, Math.max(1, guestCountRaw)) : 0;
+    const guestCount = willAttend ? 1 : 0;
 
     setStatus("submitting");
 
@@ -173,26 +172,6 @@ export function RsvpForm() {
         </div>
       </fieldset>
 
-      {attending === "yes" && (
-        <label className="block">
-          <span className="text-sm tracking-[0.14em] uppercase">
-            Number of adult guests
-          </span>
-          <input
-            required
-            type="number"
-            name="guestCount"
-            min={1}
-            max={20}
-            defaultValue={1}
-            className="mt-2 w-full border-0 border-b border-[#3d2b1f]/30 bg-transparent py-3 outline-none transition-colors focus:border-ink"
-          />
-          <span className="mt-2 block text-sm text-ink-faint">
-            Including yourself. Children are not included on the day.
-          </span>
-        </label>
-      )}
-
       <label className="block">
         <span className="text-sm tracking-[0.14em] uppercase">
           Additional information
@@ -203,6 +182,10 @@ export function RsvpForm() {
           maxLength={1000}
           className="mt-2 w-full resize-y border-0 border-b border-[#3d2b1f]/30 bg-transparent py-3 outline-none transition-colors focus:border-ink"
         />
+        <span className="mt-2 block text-sm text-ink-faint">
+          Unfortunately a plus one is not possible unless you were specifically
+          told you may bring someone.
+        </span>
       </label>
 
       {status === "error" && (
