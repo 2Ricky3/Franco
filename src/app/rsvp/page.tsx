@@ -8,14 +8,14 @@ export const metadata = {
 
 export default function RsvpPage() {
   return (
-    <div className="animate-fade-up pb-20">
+    <div className="pb-20">
       <PageIntro title="RSVP">
         <p>
           Please RSVP by <strong>{site.rsvp.deadlineLabel}</strong> so we can
           have an accurate headcount.
         </p>
       </PageIntro>
-      <div className="mt-12 px-5">
+      <div className="mt-12 px-5" data-aos="fade-up">
         <RsvpForm />
       </div>
     </div>

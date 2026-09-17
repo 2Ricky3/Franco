@@ -12,19 +12,96 @@ function getRemaining(target: number) {
   return { days, hours, minutes, seconds, done: diff === 0 };
 }
 
-export function Countdown() {
-  const target = useMemo(
-    () => new Date(site.wedding.startAt).getTime(),
-    [],
-  );
-  const [remaining, setRemaining] = useState(() => getRemaining(target));
+function pad(value: number, size: number) {
+  return String(value).padStart(size, "0");
+}
+
+function SplitFlapDigit({ digit }: { digit: string }) {
+  const [shown, setShown] = useState(digit);
+  const [incoming, setIncoming] = useState(digit);
+  const [flipping, setFlipping] = useState(false);
 
   useEffect(() => {
-    const id = window.setInterval(() => {
-      setRemaining(getRemaining(target));
-    }, 1000);
+    if (digit === incoming) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setShown(digit);
+      setIncoming(digit);
+      setFlipping(false);
+      return;
+    }
+
+    setIncoming(digit);
+    setFlipping(true);
+    const id = window.setTimeout(() => {
+      setShown(digit);
+      setFlipping(false);
+    }, 560);
+    return () => window.clearTimeout(id);
+  }, [digit, incoming]);
+
+  return (
+    <span className={`split-flap${flipping ? " is-flipping" : ""}`}>
+      <span className="split-flap-inner">
+        <span className="split-flap-half split-flap-static-top">
+          <span className="split-flap-face">{incoming}</span>
+        </span>
+        <span className="split-flap-half split-flap-static-bottom">
+          <span className="split-flap-face">{shown}</span>
+        </span>
+        <span className="split-flap-flip split-flap-flip-top">
+          <span className="split-flap-face">{shown}</span>
+        </span>
+        <span className="split-flap-flip split-flap-flip-bottom">
+          <span className="split-flap-face">{incoming}</span>
+        </span>
+        <span className="split-flap-hinge" aria-hidden />
+      </span>
+    </span>
+  );
+}
+
+function SplitFlapGroup({
+  label,
+  value,
+  digits,
+}: {
+  label: string;
+  value: number;
+  digits: number;
+}) {
+  const padded = pad(value, digits);
+  return (
+    <div className="text-center">
+      <div className="flex justify-center gap-[3px] sm:gap-1">
+        {padded.split("").map((digit, index) => (
+          <SplitFlapDigit key={`${label}-${index}`} digit={digit} />
+        ))}
+      </div>
+      <p className="mt-2 text-[10px] tracking-[0.18em] uppercase text-ink-faint sm:text-[11px]">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+export function Countdown() {
+  const target = useMemo(() => new Date(site.wedding.startAt).getTime(), []);
+  const [remaining, setRemaining] = useState<ReturnType<
+    typeof getRemaining
+  > | null>(null);
+
+  useEffect(() => {
+    const tick = () => setRemaining(getRemaining(target));
+    tick();
+    const id = window.setInterval(tick, 1000);
     return () => window.clearInterval(id);
   }, [target]);
+
+  if (!remaining) {
+    return <div className="mx-auto h-[4.75rem] max-w-md" aria-hidden />;
+  }
 
   if (remaining.done) {
     return (
@@ -34,25 +111,15 @@ export function Countdown() {
     );
   }
 
-  const units = [
-    { label: "Days", value: remaining.days },
-    { label: "Hours", value: remaining.hours },
-    { label: "Minutes", value: remaining.minutes },
-    { label: "Seconds", value: remaining.seconds },
-  ];
-
   return (
-    <div className="flex justify-center gap-6 sm:gap-10">
-      {units.map((unit) => (
-        <div key={unit.label} className="text-center">
-          <p className="text-2xl tabular-nums sm:text-3xl">
-            {String(unit.value).padStart(2, "0")}
-          </p>
-          <p className="mt-1 text-[11px] tracking-[0.18em] uppercase text-ink-faint">
-            {unit.label}
-          </p>
-        </div>
-      ))}
+    <div
+      className="flex justify-center gap-3 sm:gap-5"
+      aria-label={`${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, ${remaining.seconds} seconds until the wedding`}
+    >
+      <SplitFlapGroup label="Days" value={remaining.days} digits={3} />
+      <SplitFlapGroup label="Hours" value={remaining.hours} digits={2} />
+      <SplitFlapGroup label="Minutes" value={remaining.minutes} digits={2} />
+      <SplitFlapGroup label="Seconds" value={remaining.seconds} digits={2} />
     </div>
   );
 }

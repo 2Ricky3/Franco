@@ -6,9 +6,12 @@ import { site } from "@/content/site";
 
 export default function HomePage() {
   return (
-    <div className="animate-fade-up pb-16">
+    <div className="pb-16">
       <section className="mx-auto max-w-3xl px-5 pt-8 text-center md:pt-14">
-        <h1 className="font-script whitespace-nowrap text-[clamp(2.15rem,8.4vw,3.4rem)] leading-none">
+        <h1
+          className="font-script whitespace-nowrap text-[clamp(2.15rem,8.4vw,3.4rem)] leading-none"
+          data-aos="fade-up"
+        >
           {site.couple.names}
         </h1>
         <div className="mx-auto mt-10 max-w-md md:mt-14">
@@ -18,20 +21,22 @@ export default function HomePage() {
             aspectClass="aspect-[4/5]"
           />
         </div>
-        <p className="mt-10 text-base tracking-[0.12em] uppercase md:text-lg">
-          {site.wedding.dateLabel}
-        </p>
-        <p className="mt-2 text-base text-ink-soft md:text-lg">
-          {site.wedding.locationLabel}
-        </p>
-        <Link
-          href="/rsvp"
-          className="mt-10 inline-block bg-fill px-10 py-3.5 text-sm tracking-[0.2em] uppercase text-white transition-opacity hover:opacity-85"
-        >
-          RSVP
-        </Link>
-        <div className="mt-12">
-          <Countdown />
+        <div data-aos="fade-up">
+          <p className="mt-10 text-base tracking-[0.12em] uppercase md:text-lg">
+            {site.wedding.dateLabel}
+          </p>
+          <p className="mt-2 text-base text-ink-soft md:text-lg">
+            {site.wedding.locationLabel}
+          </p>
+          <Link
+            href="/rsvp"
+            className="mt-10 inline-block bg-fill px-10 py-3.5 text-sm tracking-[0.2em] uppercase text-white transition-opacity hover:opacity-85"
+          >
+            RSVP
+          </Link>
+          <div className="mt-12">
+            <Countdown />
+          </div>
         </div>
       </section>
 

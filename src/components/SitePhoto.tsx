@@ -6,6 +6,7 @@ type SitePhotoProps = {
   alt: string;
   className?: string;
   aspectClass?: string;
+  animate?: boolean;
 };
 
 export function SitePhoto({
@@ -13,6 +14,7 @@ export function SitePhoto({
   alt,
   className = "",
   aspectClass = "aspect-[4/5]",
+  animate = true,
 }: SitePhotoProps) {
   const relative = src.replace(/^\//, "");
   const filePath = path.join(process.cwd(), "public", relative);
@@ -22,6 +24,7 @@ export function SitePhoto({
     return (
       <div
         className={`${aspectClass} w-full bg-[#f4f0ec] flex items-center justify-center ${className}`}
+        data-aos={animate ? "fade-up" : undefined}
       >
         <p className="text-sm tracking-[0.18em] uppercase text-ink-faint">
           Photo coming soon
@@ -31,7 +34,10 @@ export function SitePhoto({
   }
 
   return (
-    <div className={`${aspectClass} w-full overflow-hidden ${className}`}>
+    <div
+      className={`${aspectClass} w-full overflow-hidden ${className}`}
+      data-aos={animate ? "fade-up" : undefined}
+    >
       {/* Files are dropped into public/photos later; a plain img keeps missing files from breaking the build. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={src} alt={alt} className="h-full w-full object-cover" />

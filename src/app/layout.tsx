@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Great_Vibes, Inter } from "next/font/google";
+import { AosInit } from "@/components/AosInit";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { site } from "@/content/site";
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${greatVibes.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-ink font-sans">
+        <AosInit />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

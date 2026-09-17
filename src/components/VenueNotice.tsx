@@ -8,7 +8,10 @@ type VenueNoticeProps = {
 
 export function VenueNotice({ compact = false }: VenueNoticeProps) {
   return (
-    <section className="mx-auto max-w-2xl px-5 text-center">
+    <section
+      className="mx-auto max-w-2xl px-5 text-center"
+      data-aos="fade-up"
+    >
       <p className="text-[11px] font-medium tracking-[0.22em] uppercase">
         <span className="animate-important">IMPORTANT NOTICE</span>
       </p>

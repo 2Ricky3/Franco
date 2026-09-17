@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function TravelPage() {
   return (
-    <div className="animate-fade-up pb-20">
+    <div className="pb-20">
       <PageIntro title="Travel" />
       <div className="mx-auto mt-8 max-w-md px-5">
         <SitePhoto
@@ -26,7 +26,7 @@ export default function TravelPage() {
 
       <ol className="mx-auto mt-16 max-w-xl space-y-10 px-5">
         {site.travelSteps.map((step) => (
-          <li key={step.step} className="text-center">
+          <li key={step.step} className="text-center" data-aos="fade-up">
             <p className="text-sm tracking-[0.22em] uppercase text-ink-faint">
               Step {step.step}
             </p>
@@ -36,7 +36,7 @@ export default function TravelPage() {
         ))}
       </ol>
 
-      <div className="mt-12 flex flex-col items-center gap-4 px-5">
+      <div className="mt-12 flex flex-col items-center gap-4 px-5" data-aos="fade-up">
         <a
           href={site.venue.directionsToTownUrl}
           target="_blank"
@@ -55,7 +55,7 @@ export default function TravelPage() {
         </a>
       </div>
 
-      <section className="mx-auto mt-20 max-w-xl px-5 text-center">
+      <section className="mx-auto mt-20 max-w-xl px-5 text-center" data-aos="fade-up">
         <h2 className="font-script text-4xl">{site.parking.title}</h2>
         <RichText className="mt-5 text-ink-soft" text={site.parking.body} />
       </section>

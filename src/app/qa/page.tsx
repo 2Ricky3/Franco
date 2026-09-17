@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function QaPage() {
   return (
-    <div className="animate-fade-up pb-20">
+    <div className="pb-20">
       <PageIntro title="Q&A" />
       <div className="mx-auto mt-8 max-w-md px-5">
         <SitePhoto
@@ -18,7 +18,7 @@ export default function QaPage() {
           aspectClass="aspect-[4/5]"
         />
       </div>
-      <div className="mx-auto mt-10 max-w-2xl px-5">
+      <div className="mx-auto mt-10 max-w-2xl px-5" data-aos="fade-up">
         <FaqAccordion />
       </div>
     </div>

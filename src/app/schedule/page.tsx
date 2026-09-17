@@ -11,7 +11,7 @@ export default function SchedulePage() {
   const events = [...site.schedule, ...site.scheduleTba];
 
   return (
-    <div className="animate-fade-up pb-20">
+    <div className="pb-20">
       <PageIntro title="Schedule" />
       <div className="mx-auto mt-8 max-w-md px-5">
         <SitePhoto
@@ -22,7 +22,7 @@ export default function SchedulePage() {
       </div>
       <div className="mx-auto mt-12 max-w-2xl space-y-20 px-5">
         {events.map((event) => (
-          <article key={event.id} className="text-center">
+          <article key={event.id} className="text-center" data-aos="fade-up">
             <h2 className="font-script text-4xl md:text-5xl">{event.title}</h2>
             {event.venue && (
               <p className="mt-4 text-sm tracking-[0.16em] uppercase text-ink-soft">
