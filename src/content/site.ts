@@ -80,7 +80,7 @@ export const site = {
       title: "Ceremony",
       venue: "Minas Farm Venue",
       details: [
-        "👔 Dress code: Semi-Formal Attire",
+        "👔 Dress code: Semi-formal attire. If you're unsure what that looks like, [see examples](/attire).",
         "The ceremony will start at **15:00**. Please be seated before then.",
         "Official schedule to be communicated on the day.",
       ],
@@ -247,7 +247,8 @@ export const site = {
     },
     {
       question: "What is the dress code?",
-      answer: "Semi-formal attire.",
+      answer:
+        "Semi-formal attire.\n\nIf you're unsure what that looks like, [see what semi-formal looks like](/attire).",
     },
     {
       question: "Is there accommodation at the venue?",
@@ -260,6 +261,47 @@ export const site = {
         "Do not follow a GPS route that skips Haenertsburg. Travel to **Haenertsburg** first, then set your GPS to **Minas Farm Venue**, and follow the Minas and Zwakala signs along Cheerio Road.",
     },
   ],
+  attire: {
+    title: "Semi-formal attire",
+    intro:
+      "The dress code is semi-formal. Women and men are shown separately below — use these as a guide, then browse more ideas on Pinterest if you need them.",
+    women: {
+      heading: "Women",
+      pinterestLabel: "More women's ideas on Pinterest",
+      pinterestUrl:
+        "https://www.pinterest.com/ideas/semi-formal-wedding-attire-for-women/918614172202/",
+      photos: [
+        {
+          src: "/photos/attire-women-1.jpg",
+          alt: "Semi-formal dress examples for women",
+        },
+        {
+          src: "/photos/attire-women-2.jpg",
+          alt: "More semi-formal dress examples for women",
+        },
+        {
+          src: "/photos/attire-women-3.jpg",
+          alt: "Pastel and floral semi-formal dress examples for women",
+        },
+      ],
+    },
+    men: {
+      heading: "Men",
+      pinterestLabel: "More men's ideas on Pinterest",
+      pinterestUrl:
+        "https://www.pinterest.com/ideas/semi-formal-wedding-attire-for-guest-men/917676282904/",
+      photos: [
+        {
+          src: "/photos/attire-men-1.jpg",
+          alt: "Semi-formal outfit examples for men",
+        },
+        {
+          src: "/photos/attire-men-2.jpg",
+          alt: "More semi-formal outfit examples for men",
+        },
+      ],
+    },
+  },
   registry: {
     title: "Registry",
     paragraphs: [

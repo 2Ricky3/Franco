@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PageIntro } from "@/components/PageIntro";
 import { RichText } from "@/components/RichText";
 import { SitePhoto } from "@/components/SitePhoto";
@@ -34,6 +35,14 @@ export default function SchedulePage() {
                 <RichText key={detail} text={detail} />
               ))}
             </div>
+            {event.id === "ceremony" && (
+              <Link
+                href="/attire"
+                className="mt-8 inline-block text-sm tracking-[0.16em] uppercase underline underline-offset-8 transition-opacity hover:opacity-70"
+              >
+                See what semi-formal looks like
+              </Link>
+            )}
           </article>
         ))}
       </div>
