@@ -19,44 +19,56 @@ function pad(value: number, size: number) {
 function SplitFlapDigit({ digit }: { digit: string }) {
   const [shown, setShown] = useState(digit);
   const [incoming, setIncoming] = useState(digit);
-  const [flipping, setFlipping] = useState(false);
+  const [phase, setPhase] = useState<"idle" | "top" | "bottom">("idle");
 
   useEffect(() => {
-    if (digit === incoming) return;
+    if (digit === shown) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       setShown(digit);
       setIncoming(digit);
-      setFlipping(false);
+      setPhase("idle");
       return;
     }
 
     setIncoming(digit);
-    setFlipping(true);
-    const id = window.setTimeout(() => {
+    setPhase("top");
+
+    const topId = window.setTimeout(() => setPhase("bottom"), 180);
+    const doneId = window.setTimeout(() => {
       setShown(digit);
-      setFlipping(false);
-    }, 560);
-    return () => window.clearTimeout(id);
-  }, [digit, incoming]);
+      setPhase("idle");
+    }, 360);
+
+    return () => {
+      window.clearTimeout(topId);
+      window.clearTimeout(doneId);
+    };
+  }, [digit, shown]);
+
+  const className = [
+    "flap-cell",
+    phase === "top" ? "is-top" : "",
+    phase === "bottom" ? "is-bot" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <span className={`split-flap${flipping ? " is-flipping" : ""}`}>
-      <span className="split-flap-inner">
-        <span className="split-flap-half split-flap-static-top">
-          <span className="split-flap-face">{incoming}</span>
-        </span>
-        <span className="split-flap-half split-flap-static-bottom">
-          <span className="split-flap-face">{shown}</span>
-        </span>
-        <span className="split-flap-flip split-flap-flip-top">
-          <span className="split-flap-face">{shown}</span>
-        </span>
-        <span className="split-flap-flip split-flap-flip-bottom">
-          <span className="split-flap-face">{incoming}</span>
-        </span>
-        <span className="split-flap-hinge" aria-hidden />
+    <span className={className}>
+      <span className="flap-top">
+        <span className="flap-glyph">{incoming}</span>
+      </span>
+      <span className="flap-bot">
+        <span className="flap-glyph">{shown}</span>
+      </span>
+      <span className="flap-divider" aria-hidden />
+      <span className="flap-top-anim">
+        <span className="flap-glyph">{shown}</span>
+      </span>
+      <span className="flap-bot-anim">
+        <span className="flap-glyph">{incoming}</span>
       </span>
     </span>
   );
@@ -74,12 +86,12 @@ function SplitFlapGroup({
   const padded = pad(value, digits);
   return (
     <div className="text-center">
-      <div className="flex justify-center gap-[3px] sm:gap-1">
+      <div className="flex justify-center gap-[5px] sm:gap-1.5">
         {padded.split("").map((digit, index) => (
           <SplitFlapDigit key={`${label}-${index}`} digit={digit} />
         ))}
       </div>
-      <p className="mt-2 text-[10px] tracking-[0.18em] uppercase text-ink-faint sm:text-[11px]">
+      <p className="mt-2.5 text-[10px] tracking-[0.2em] uppercase text-white/45 sm:text-[11px]">
         {label}
       </p>
     </div>
@@ -100,7 +112,7 @@ export function Countdown() {
   }, [target]);
 
   if (!remaining) {
-    return <div className="mx-auto h-[4.75rem] max-w-md" aria-hidden />;
+    return <div className="mx-auto h-[7.5rem] max-w-md" aria-hidden />;
   }
 
   if (remaining.done) {
@@ -113,7 +125,7 @@ export function Countdown() {
 
   return (
     <div
-      className="flex justify-center gap-3 sm:gap-5"
+      className="split-flap-board"
       aria-label={`${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, ${remaining.seconds} seconds until the wedding`}
     >
       <SplitFlapGroup label="Days" value={remaining.days} digits={3} />

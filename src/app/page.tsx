@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Countdown } from "@/components/Countdown";
+import { HomeTitle } from "@/components/HomeTitle";
 import { SitePhoto } from "@/components/SitePhoto";
 import { VenueNotice } from "@/components/VenueNotice";
 import { site } from "@/content/site";
@@ -8,12 +9,7 @@ export default function HomePage() {
   return (
     <div className="pb-16">
       <section className="mx-auto max-w-3xl px-5 pt-8 text-center md:pt-14">
-        <h1
-          className="font-script whitespace-nowrap text-[clamp(2.15rem,8.4vw,3.4rem)] leading-none"
-          data-aos="fade-up"
-        >
-          {site.couple.names}
-        </h1>
+        <HomeTitle />
         <div className="mx-auto mt-10 max-w-md md:mt-14">
           <SitePhoto
             src={site.photos.couple}

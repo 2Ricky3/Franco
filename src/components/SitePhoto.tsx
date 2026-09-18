@@ -23,7 +23,7 @@ export function SitePhoto({
   if (!exists) {
     return (
       <div
-        className={`${aspectClass} w-full bg-[#f4f0ec] flex items-center justify-center ${className}`}
+        className={`${aspectClass} w-full overflow-hidden rounded-2xl bg-[#f4f0ec] flex items-center justify-center ${className}`}
         data-aos={animate ? "fade-up" : undefined}
       >
         <p className="text-sm tracking-[0.18em] uppercase text-ink-faint">
@@ -35,7 +35,7 @@ export function SitePhoto({
 
   return (
     <div
-      className={`${aspectClass} w-full overflow-hidden ${className}`}
+      className={`${aspectClass} w-full overflow-hidden rounded-2xl ${className}`}
       data-aos={animate ? "fade-up" : undefined}
     >
       {/* Files are dropped into public/photos later; a plain img keeps missing files from breaking the build. */}

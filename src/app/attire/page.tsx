@@ -30,7 +30,7 @@ function AttireGallery({
       </a>
       <div className="mt-10 space-y-8">
         {photos.map((photo) => (
-          <div key={photo.src} className="overflow-hidden bg-[#f4f0ec]">
+          <div key={photo.src} className="overflow-hidden rounded-2xl bg-[#f4f0ec]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={photo.src} alt={photo.alt} className="h-auto w-full" />
           </div>
