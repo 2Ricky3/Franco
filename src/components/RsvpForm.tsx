@@ -1,28 +1,68 @@
 "use client";
 
-import { useActionState, useState } from "react";
-import { submitRsvp, type RsvpActionState } from "@/app/rsvp/actions";
+import { FormEvent, useState } from "react";
 import { site } from "@/content/site";
 
-const initialState: RsvpActionState = { status: "idle" };
+type Status = "idle" | "submitting";
+type RsvpResult =
+  | { status: "thanks-yes" }
+  | { status: "thanks-no" }
+  | { status: "duplicate" }
+  | { status: "error"; message: string };
 
 export function RsvpForm() {
   const [attending, setAttending] = useState<"yes" | "no">("yes");
-  const [state, formAction, pending] = useActionState(submitRsvp, initialState);
+  const [status, setStatus] = useState<Status>("idle");
+  const [result, setResult] = useState<RsvpResult | null>(null);
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    setStatus("submitting");
+
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          fullName: String(data.get("fullName") ?? ""),
+          email: String(data.get("email") ?? ""),
+          notes: String(data.get("notes") ?? ""),
+          attending,
+        }),
+      });
+
+      const payload = (await response.json()) as RsvpResult;
+      setResult(payload);
+      setStatus("idle");
+    } catch (error) {
+      console.error("RSVP request failed", error);
+      setResult({
+        status: "error",
+        message: "Something went wrong. Please try again in a moment.",
+      });
+      setStatus("idle");
+    }
+  }
 
   if (
-    state.status === "duplicate" ||
-    state.status === "thanks-yes" ||
-    state.status === "thanks-no"
+    result?.status === "duplicate" ||
+    result?.status === "thanks-yes" ||
+    result?.status === "thanks-no"
   ) {
     const title =
-      state.status === "duplicate"
+      result.status === "duplicate"
         ? "Already received"
         : site.rsvp.confirmationTitle;
     const body =
-      state.status === "duplicate"
+      result.status === "duplicate"
         ? site.rsvp.duplicateMessage
-        : state.status === "thanks-no"
+        : result.status === "thanks-no"
           ? site.rsvp.confirmationDeclining
           : site.rsvp.confirmationAttending;
 
@@ -35,7 +75,12 @@ export function RsvpForm() {
   }
 
   return (
-    <form action={formAction} className="mx-auto w-full max-w-md space-y-8">
+    <form
+      method="post"
+      action="/api/rsvp"
+      onSubmit={onSubmit}
+      className="mx-auto w-full max-w-md space-y-8"
+    >
       <label className="block">
         <span className="text-sm tracking-[0.14em] uppercase">Full name</span>
         <input
@@ -120,18 +165,18 @@ export function RsvpForm() {
         </span>
       </label>
 
-      {state.status === "error" && (
+      {result?.status === "error" && (
         <p className="text-center text-sm text-ink-soft" role="alert">
-          {state.message}
+          {result.message}
         </p>
       )}
 
       <button
         type="submit"
-        disabled={pending}
+        disabled={status === "submitting"}
         className="w-full bg-fill py-3.5 text-sm tracking-[0.18em] uppercase text-white transition-opacity hover:opacity-85 disabled:opacity-50"
       >
-        {pending ? "Sending…" : "Send RSVP"}
+        {status === "submitting" ? "Sending…" : "Send RSVP"}
       </button>
     </form>
   );

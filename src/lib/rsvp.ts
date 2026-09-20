@@ -1,24 +1,34 @@
-"use server";
-
 import { createAnonSupabase } from "@/lib/supabase";
 
-export type RsvpActionState =
-  | { status: "idle" }
-  | { status: "error"; message: string }
-  | { status: "duplicate" }
+export type RsvpResult =
   | { status: "thanks-yes" }
-  | { status: "thanks-no" };
+  | { status: "thanks-no" }
+  | { status: "duplicate" }
+  | { status: "error"; message: string };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export async function submitRsvp(
-  _prev: RsvpActionState,
-  formData: FormData,
-): Promise<RsvpActionState> {
-  const fullName = String(formData.get("fullName") ?? "").trim();
-  const email = String(formData.get("email") ?? "").trim();
-  const notes = String(formData.get("notes") ?? "").trim();
-  const willAttend = String(formData.get("attending") ?? "yes") !== "no";
+export function parseRsvpInput(input: {
+  fullName: string;
+  email: string;
+  notes: string;
+  attending: string;
+}) {
+  return {
+    fullName: input.fullName.trim(),
+    email: input.email.trim(),
+    notes: input.notes.trim(),
+    willAttend: input.attending !== "no",
+  };
+}
+
+export async function saveRsvp(input: {
+  fullName: string;
+  email: string;
+  notes: string;
+  attending: string;
+}): Promise<RsvpResult> {
+  const { fullName, email, notes, willAttend } = parseRsvpInput(input);
   const guestCount = willAttend ? 1 : 0;
 
   if (fullName.length < 2 || fullName.length > 120) {
@@ -47,11 +57,20 @@ export async function submitRsvp(
     });
 
     if (error) {
-      if (error.code === "23505" || /duplicate|unique/i.test(error.message)) {
+      if (
+        error.code === "23505" ||
+        error.code === "409" ||
+        /duplicate|unique/i.test(`${error.message} ${error.details ?? ""}`)
+      ) {
         return { status: "duplicate" };
       }
 
-      console.error("RSVP insert failed", error);
+      console.error("RSVP insert failed", {
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+      });
       return {
         status: "error",
         message: "Something went wrong. Please try again in a moment.",
