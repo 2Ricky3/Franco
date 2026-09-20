@@ -40,7 +40,7 @@ export default function SchedulePage() {
                 href="/attire"
                 className="mt-8 inline-block text-sm tracking-[0.16em] uppercase underline underline-offset-8 transition-opacity hover:opacity-70"
               >
-                See what semi-formal looks like
+                See what formal looks like
               </Link>
             )}
           </article>

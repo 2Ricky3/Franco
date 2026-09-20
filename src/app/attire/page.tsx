@@ -2,7 +2,7 @@ import { PageIntro } from "@/components/PageIntro";
 import { site } from "@/content/site";
 
 export const metadata = {
-  title: "Semi-formal attire",
+  title: "Formal attire",
   robots: { index: false, follow: false },
 };
 

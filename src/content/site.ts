@@ -80,7 +80,7 @@ export const site = {
       title: "Ceremony",
       venue: "Minas Farm Venue",
       details: [
-        "👔 Dress code: Semi-formal attire. If you're unsure what that looks like, [see examples](/attire).",
+        "👔 Dress code: Formal attire. If you're unsure what that looks like, [see examples](/attire).",
         "The ceremony will start at **15:00**. Please be seated before then.",
         "Official schedule to be communicated on the day.",
       ],
@@ -248,7 +248,7 @@ export const site = {
     {
       question: "What is the dress code?",
       answer:
-        "Semi-formal attire.\n\nIf you're unsure what that looks like, [see what semi-formal looks like](/attire).",
+        "Formal attire.\n\nIf you're unsure what that looks like, [see what formal looks like](/attire).",
     },
     {
       question: "Is there accommodation at the venue?",
@@ -262,26 +262,26 @@ export const site = {
     },
   ],
   attire: {
-    title: "Semi-formal attire",
+    title: "Formal attire",
     intro:
-      "The dress code is semi-formal. Women and men are shown separately below — use these as a guide, then browse more ideas on Pinterest if you need them.",
+      "The dress code is formal. Women and men are shown separately below — use these as a guide, then browse more ideas on Pinterest if you need them.",
     women: {
       heading: "Women",
       pinterestLabel: "More women's ideas on Pinterest",
       pinterestUrl:
-        "https://www.pinterest.com/ideas/semi-formal-wedding-attire-for-women/918614172202/",
+        "https://www.pinterest.com/ideas/formal-wedding-attire-for-women/945871531020/",
       photos: [
         {
           src: "/photos/attire-women-1.jpg",
-          alt: "Semi-formal dress examples for women",
+          alt: "Formal dress examples for women",
         },
         {
           src: "/photos/attire-women-2.jpg",
-          alt: "More semi-formal dress examples for women",
+          alt: "More formal dress examples for women",
         },
         {
           src: "/photos/attire-women-3.jpg",
-          alt: "Pastel and floral semi-formal dress examples for women",
+          alt: "Pastel and floral formal dress examples for women",
         },
       ],
     },
@@ -289,15 +289,15 @@ export const site = {
       heading: "Men",
       pinterestLabel: "More men's ideas on Pinterest",
       pinterestUrl:
-        "https://www.pinterest.com/ideas/semi-formal-wedding-attire-for-guest-men/917676282904/",
+        "https://www.pinterest.com/ideas/formal-wedding-guest-attire-men/914716582075/",
       photos: [
         {
           src: "/photos/attire-men-1.jpg",
-          alt: "Semi-formal outfit examples for men",
+          alt: "Formal outfit examples for men",
         },
         {
           src: "/photos/attire-men-2.jpg",
-          alt: "More semi-formal outfit examples for men",
+          alt: "More formal outfit examples for men",
         },
       ],
     },
