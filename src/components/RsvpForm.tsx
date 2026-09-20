@@ -11,14 +11,15 @@ type RsvpResult =
   | { status: "error"; message: string };
 
 export function RsvpForm() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [notes, setNotes] = useState("");
   const [attending, setAttending] = useState<"yes" | "no">("yes");
   const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<RsvpResult | null>(null);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
 
     setStatus("submitting");
 
@@ -30,9 +31,9 @@ export function RsvpForm() {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          fullName: String(data.get("fullName") ?? ""),
-          email: String(data.get("email") ?? ""),
-          notes: String(data.get("notes") ?? ""),
+          fullName,
+          email,
+          notes,
           attending,
         }),
       });
@@ -89,6 +90,8 @@ export function RsvpForm() {
           autoComplete="name"
           minLength={2}
           maxLength={120}
+          value={fullName}
+          onChange={(event) => setFullName(event.target.value)}
           className="mt-2 w-full border-0 border-b border-[#3d2b1f]/30 bg-transparent py-3 outline-none transition-colors focus:border-ink"
         />
       </label>
@@ -101,6 +104,8 @@ export function RsvpForm() {
           name="email"
           autoComplete="email"
           maxLength={200}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
           className="mt-2 w-full border-0 border-b border-[#3d2b1f]/30 bg-transparent py-3 outline-none transition-colors focus:border-ink"
         />
       </label>
@@ -157,6 +162,8 @@ export function RsvpForm() {
           name="notes"
           rows={4}
           maxLength={1000}
+          value={notes}
+          onChange={(event) => setNotes(event.target.value)}
           className="mt-2 w-full resize-y border-0 border-b border-[#3d2b1f]/30 bg-transparent py-3 outline-none transition-colors focus:border-ink"
         />
         <span className="mt-2 block text-sm text-ink-faint">

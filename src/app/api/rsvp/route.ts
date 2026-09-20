@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
-import { saveRsvp, type RsvpResult } from "@/lib/rsvp";
+import { saveRsvp } from "@/lib/rsvp";
 
 export const dynamic = "force-dynamic";
-
-function statusCode(result: RsvpResult) {
-  if (result.status === "error") return 400;
-  if (result.status === "duplicate") return 409;
-  return 200;
-}
 
 async function readInput(request: Request) {
   const contentType = request.headers.get("content-type") ?? "";
@@ -40,7 +34,7 @@ export async function POST(request: Request) {
       (request.headers.get("content-type") ?? "").includes("application/json");
 
     if (wantsJson) {
-      return NextResponse.json(result, { status: statusCode(result) });
+      return NextResponse.json(result);
     }
 
     const url = new URL("/rsvp", request.url);
