@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-export function createBrowserSupabase() {
+export function createAnonSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -8,5 +8,7 @@ export function createBrowserSupabase() {
     throw new Error("Supabase environment variables are not set.");
   }
 
-  return createClient(url, key);
+  return createClient(url, key, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
 }

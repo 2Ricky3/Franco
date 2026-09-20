@@ -1,120 +1,49 @@
 "use client";
 
-import { FormEvent, useState, useSyncExternalStore } from "react";
+import { useActionState, useState } from "react";
+import { submitRsvp, type RsvpActionState } from "@/app/rsvp/actions";
 import { site } from "@/content/site";
-import { createBrowserSupabase } from "@/lib/supabase";
 
-const STORAGE_KEY = "af-rsvp-email";
-const listeners = new Set<() => void>();
-let cachedEmail: string | null | undefined;
-
-function subscribe(listener: () => void) {
-  listeners.add(listener);
-  return () => listeners.delete(listener);
-}
-
-function getStoredEmail() {
-  if (typeof window === "undefined") return null;
-  if (cachedEmail === undefined) {
-    cachedEmail = window.localStorage.getItem(STORAGE_KEY);
-  }
-  return cachedEmail;
-}
-
-function saveStoredEmail(email: string) {
-  window.localStorage.setItem(STORAGE_KEY, email);
-  cachedEmail = email;
-  listeners.forEach((listener) => listener());
-}
-
-type Status = "idle" | "submitting" | "error";
-type Result = "thanks-yes" | "thanks-no" | "duplicate" | "already";
+const initialState: RsvpActionState = { status: "idle" };
 
 export function RsvpForm() {
-  const storedEmail = useSyncExternalStore(subscribe, getStoredEmail, () => null);
   const [attending, setAttending] = useState<"yes" | "no">("yes");
-  const [status, setStatus] = useState<Status>("idle");
-  const [submitted, setSubmitted] = useState<Exclude<Result, "already"> | null>(
-    null,
-  );
-  const result: Result | null = submitted ?? (storedEmail ? "already" : null);
+  const [state, formAction, pending] = useActionState(submitRsvp, initialState);
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
-    const fullName = String(data.get("fullName") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const notes = String(data.get("notes") ?? "").trim();
-    const willAttend = attending === "yes";
-    const guestCount = willAttend ? 1 : 0;
-
-    setStatus("submitting");
-
-    try {
-      const supabase = createBrowserSupabase();
-      const { error } = await supabase.from("rsvps").insert({
-        full_name: fullName,
-        email,
-        attending: willAttend,
-        guest_count: guestCount,
-        notes,
-      });
-
-      if (error) {
-        if (error.code === "23505" || /duplicate|unique/i.test(error.message)) {
-          saveStoredEmail(email);
-          setSubmitted("duplicate");
-          setStatus("idle");
-          return;
-        }
-        setStatus("error");
-        return;
-      }
-
-      saveStoredEmail(email);
-      setSubmitted(willAttend ? "thanks-yes" : "thanks-no");
-      setStatus("idle");
-      form.reset();
-      setAttending("yes");
-    } catch {
-      setStatus("error");
-    }
-  }
-
-  if (result) {
+  if (
+    state.status === "duplicate" ||
+    state.status === "thanks-yes" ||
+    state.status === "thanks-no"
+  ) {
     const title =
-      result === "duplicate" || result === "already"
+      state.status === "duplicate"
         ? "Already received"
         : site.rsvp.confirmationTitle;
     const body =
-      result === "duplicate"
+      state.status === "duplicate"
         ? site.rsvp.duplicateMessage
-        : result === "already"
-          ? site.rsvp.alreadyMessage
-          : result === "thanks-no"
-            ? site.rsvp.confirmationDeclining
-            : site.rsvp.confirmationAttending;
+        : state.status === "thanks-no"
+          ? site.rsvp.confirmationDeclining
+          : site.rsvp.confirmationAttending;
 
     return (
       <div className="mx-auto max-w-md text-center">
         <h2 className="font-script text-4xl">{title}</h2>
         <p className="mt-4 text-ink-soft">{body}</p>
-        {storedEmail && (
-          <p className="mt-6 text-sm text-ink-faint">{storedEmail}</p>
-        )}
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="mx-auto w-full max-w-md space-y-8">
+    <form action={formAction} className="mx-auto w-full max-w-md space-y-8">
       <label className="block">
         <span className="text-sm tracking-[0.14em] uppercase">Full name</span>
         <input
           required
           name="fullName"
           autoComplete="name"
+          minLength={2}
+          maxLength={120}
           className="mt-2 w-full border-0 border-b border-[#3d2b1f]/30 bg-transparent py-3 outline-none transition-colors focus:border-ink"
         />
       </label>
@@ -126,6 +55,7 @@ export function RsvpForm() {
           type="email"
           name="email"
           autoComplete="email"
+          maxLength={200}
           className="mt-2 w-full border-0 border-b border-[#3d2b1f]/30 bg-transparent py-3 outline-none transition-colors focus:border-ink"
         />
       </label>
@@ -137,6 +67,7 @@ export function RsvpForm() {
             <input
               type="radio"
               name="attending"
+              value="yes"
               className="sr-only"
               checked={attending === "yes"}
               onChange={() => setAttending("yes")}
@@ -155,6 +86,7 @@ export function RsvpForm() {
             <input
               type="radio"
               name="attending"
+              value="no"
               className="sr-only"
               checked={attending === "no"}
               onChange={() => setAttending("no")}
@@ -188,18 +120,18 @@ export function RsvpForm() {
         </span>
       </label>
 
-      {status === "error" && (
-        <p className="text-center text-sm text-ink-soft">
-          Something went wrong. Please try again in a moment.
+      {state.status === "error" && (
+        <p className="text-center text-sm text-ink-soft" role="alert">
+          {state.message}
         </p>
       )}
 
       <button
         type="submit"
-        disabled={status === "submitting"}
+        disabled={pending}
         className="w-full bg-fill py-3.5 text-sm tracking-[0.18em] uppercase text-white transition-opacity hover:opacity-85 disabled:opacity-50"
       >
-        {status === "submitting" ? "Sending…" : "Send RSVP"}
+        {pending ? "Sending…" : "Send RSVP"}
       </button>
     </form>
   );
