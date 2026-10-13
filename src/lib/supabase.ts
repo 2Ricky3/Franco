@@ -1,10 +1,23 @@
 import { createClient } from "@supabase/supabase-js";
 
-export function createAnonSupabase() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+function cleanEnv(value: string | undefined) {
+  return (value ?? "").trim().replace(/^["']|["']$/g, "");
+}
 
-  if (!url || !key) {
+export function getSupabaseConfig() {
+  const url = cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const key = cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  return {
+    url,
+    key,
+    configured: url.startsWith("https://") && key.length > 20,
+  };
+}
+
+export function createAnonSupabase() {
+  const { url, key, configured } = getSupabaseConfig();
+
+  if (!configured) {
     throw new Error("Supabase environment variables are not set.");
   }
 

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getSupabaseConfig } from "@/lib/supabase";
 import { saveRsvp } from "@/lib/rsvp";
 
 export const dynamic = "force-dynamic";
@@ -23,6 +24,11 @@ async function readInput(request: Request) {
     notes: String(formData.get("notes") ?? ""),
     attending: String(formData.get("attending") ?? "yes"),
   };
+}
+
+export async function GET() {
+  const { configured } = getSupabaseConfig();
+  return NextResponse.json({ ok: true, configured });
 }
 
 export async function POST(request: Request) {

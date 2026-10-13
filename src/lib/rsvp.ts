@@ -79,7 +79,15 @@ export async function saveRsvp(input: {
 
     return { status: willAttend ? "thanks-yes" : "thanks-no" };
   } catch (error) {
+    const detail = error instanceof Error ? error.message : "Unknown error";
     console.error("RSVP submit failed", error);
+    if (/environment variables/i.test(detail)) {
+      return {
+        status: "error",
+        message:
+          "RSVP is not connected to the database on this server. Check the Vercel environment variables and redeploy.",
+      };
+    }
     return {
       status: "error",
       message: "Something went wrong. Please try again in a moment.",

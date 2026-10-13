@@ -109,6 +109,13 @@ export const site = {
       "Accommodation in Haenertsburg can fill up quickly, especially on long weekends. If you're planning to stay overnight, we'd recommend booking your accommodation early to secure the rates while they're still available.",
       "Please note that accommodation on the venue is only available for close family and the bridal party.",
     ],
+    notice: {
+      title: "Please don't book accommodation",
+      body: "Call this number instead.",
+      phoneLabel: "+27 83 321 8682",
+      phoneHref: "tel:+27833218682",
+      dismissLabel: "Got it",
+    },
     directoryImageCaption: "Accommodation directory",
     listings: [
       {

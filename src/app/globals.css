@@ -90,6 +90,10 @@ body {
   animation: important-pulse 3.6s ease-in-out infinite;
 }
 
+.accommodation-notice {
+  animation: fade-up 0.45s ease-out both;
+}
+
 .split-flap-board {
   display: inline-flex;
   flex-wrap: wrap;
@@ -269,5 +273,9 @@ body {
 
   .home-title {
     opacity: 1;
+  }
+
+  .accommodation-notice {
+    animation: none;
   }
 }

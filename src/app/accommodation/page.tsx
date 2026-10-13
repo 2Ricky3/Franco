@@ -1,3 +1,4 @@
+import { AccommodationNotice } from "@/components/AccommodationNotice";
 import { PageIntro } from "@/components/PageIntro";
 import { SitePhoto } from "@/components/SitePhoto";
 import { site } from "@/content/site";
@@ -8,7 +9,8 @@ export const metadata = {
 
 export default function AccommodationPage() {
   return (
-    <div className="pb-20">
+    <div className="pb-28">
+      <AccommodationNotice />
       <PageIntro title={site.accommodation.title} />
       <div
         className="mx-auto mt-10 max-w-2xl space-y-4 px-5 text-center text-ink-soft"
