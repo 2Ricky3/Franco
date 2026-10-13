@@ -110,8 +110,8 @@ export const site = {
       "Please note that accommodation on the venue is only available for close family and the bridal party.",
     ],
     notice: {
-      title: "Please don't book accommodation",
-      body: "Call this number instead.",
+      title: "Unable to book?",
+      body: "If you're unable to book accommodation at these places, try contacting Johan Smith for prebooked accommodation.",
       phoneLabel: "+27 83 321 8682",
       phoneHref: "tel:+27833218682",
       dismissLabel: "Got it",

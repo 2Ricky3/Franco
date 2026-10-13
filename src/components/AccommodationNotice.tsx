@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { site } from "@/content/site";
 
-const STORAGE_KEY = "af-accommodation-notice";
+const STORAGE_KEY = "af-accommodation-notice-v2";
 
 export function AccommodationNotice() {
   const [visible, setVisible] = useState(false);
